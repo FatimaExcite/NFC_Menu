@@ -1,5 +1,4 @@
 import { Routes, Route, Outlet } from "react-router-dom";
-import logo from "./logo.svg";
 import "./App.css";
 import AppBarDark from "./components/AppBar";
 import { Box } from "@mui/material";
