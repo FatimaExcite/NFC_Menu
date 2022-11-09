@@ -1,23 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import { Routes, Route, Outlet } from "react-router-dom";
+import logo from "./logo.svg";
+import "./App.css";
+import AppBarDark from "./components/AppBar";
+import { Box } from "@mui/material";
+import Home from "../src/routes/home";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <Routes>
+      <Route path={"/"} element={<Layout />}>
+        <Route index element={<Home />} />
+      </Route>
+    </Routes>
+  );
+}
+
+function Layout() {
+  return (
+    <div>
+      <Box sx={{ display: "flex" }}>
+        <Box component="main" sx={{ flexGrow: 1 }}>
+          <AppBarDark />
+          <Outlet />
+        </Box>
+      </Box>
     </div>
   );
 }
