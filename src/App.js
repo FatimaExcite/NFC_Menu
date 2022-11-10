@@ -3,12 +3,16 @@ import "./App.css";
 import AppBarDark from "./components/AppBar";
 import { Box } from "@mui/material";
 import Home from "../src/routes/home";
+import Write from "./routes/write";
+import Read from "./routes/read";
 
 function App() {
   return (
     <Routes>
       <Route path={"/"} element={<Layout />}>
         <Route index element={<Home />} />
+        <Route path={"write"} element={<Write />} />
+        <Route path={"read"} element={<Read />} />
       </Route>
     </Routes>
   );

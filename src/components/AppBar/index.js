@@ -6,6 +6,9 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { Link } from "react-router-dom";
+//import LinkM from "@mui/material/Link";
+import { Link as LinkM } from "@mui/material";
 
 function appBarLabel(label) {
   return (
@@ -13,7 +16,7 @@ function appBarLabel(label) {
       <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
         <MenuIcon />
       </IconButton>
-      <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
+      <Typography variant="h6" noWrap component="div">
         {label}
       </Typography>
     </Toolbar>
@@ -30,11 +33,37 @@ const darkTheme = createTheme({
 });
 
 export default function AppBarDark() {
+  const pages = [
+    { name: "Home", path: "/" },
+    { name: "Write", path: "write" },
+    { name: "Read", path: "read" },
+  ];
+
   return (
-    <Stack spacing={2} sx={{ flexGrow: 1 }}>
+    <Stack>
       <ThemeProvider theme={darkTheme}>
         <AppBar position="static" color="primary">
-          {appBarLabel("NFC")}
+          <Toolbar sx={{ display: "flex" }}>
+            <IconButton edge="start" color="inherit" aria-label="menu">
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" noWrap>
+              NFC
+            </Typography>
+            <Toolbar sx={{ display: "flex", justifyContent: "right" }}>
+              {pages.map((page, index) => (
+                <LinkM sx={{ ml: 3, mr: 3 }} component="button" underline="hover">
+                  <Link
+                    to={page.path}
+                    key={index}
+                    style={{ textDecoration: "none", color: "white" }}
+                  >
+                    {page.name}
+                  </Link>
+                </LinkM>
+              ))}
+            </Toolbar>
+          </Toolbar>
         </AppBar>
       </ThemeProvider>
     </Stack>
