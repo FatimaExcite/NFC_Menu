@@ -2,25 +2,22 @@ import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@m
 import Box from "@mui/material/Box";
 import react, { useState } from "react";
 
-export default function WriteButton() {
+export default function WriteButton({ handleWrite }) {
   const [message, setMessage] = useState("");
-
-  const [age, setAge] = useState("");
+  console.log("message", message);
+  const [type, setType] = useState("");
+  console.log("type", type);
 
   const handleChange = (event) => {
-    setAge(event.target.value);
+    setType(event.target.value);
   };
 
-  const handleWrite = async () => {
-    const ndef = new window.NDEFReader();
-    try {
-      await ndef.write({
-        records: [{ recordType: "url", data: "https://w3c.github.io/web-nfc/" }],
-      });
-      console.log("Message written.");
-    } catch {
-      console.log("Write failed :-( try again.");
-    }
+  const handleChangeMessage = (event) => {
+    setMessage(event.target.value);
+  };
+
+  const action = async () => {
+    await handleWrite(type, message);
   };
 
   return (
@@ -33,22 +30,27 @@ export default function WriteButton() {
       >
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label" sx={{ mb: 3 }}>
-            Age
+            Tipo
           </InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={age}
-            label="Age"
+            value={type}
+            label="Tipo"
             onChange={handleChange}
             sx={{ mb: 3 }}
           >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
+            <MenuItem value={"text"}>Texto</MenuItem>
+            <MenuItem value={"url"}>URL</MenuItem>
           </Select>
-          <TextField fullWidth label="fullWidth" id="fullWidth" sx={{ mb: 3 }} />
-          <Button variant="contained" onClick={() => handleWrite()} sx={{ mb: 3 }}>
+          <TextField
+            fullWidth
+            label="mensaje"
+            id="message"
+            sx={{ mb: 3 }}
+            onChange={handleChangeMessage}
+          />
+          <Button variant="contained" onClick={() => action()} sx={{ mb: 3 }}>
             Write NFC
           </Button>
         </FormControl>
