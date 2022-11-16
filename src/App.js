@@ -10,9 +10,8 @@ function App() {
   return (
     <Routes>
       <Route path={"/NFC_Menu"} element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route path={"write"} element={<Write />} />
-        <Route path={"read"} element={<Read />} />
+        <Route index element={<Write />} />
+        <Route path={"leer"} element={<Read />} />
       </Route>
     </Routes>
   );

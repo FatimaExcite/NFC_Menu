@@ -7,7 +7,6 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { Link } from "react-router-dom";
-//import LinkM from "@mui/material/Link";
 import { Link as LinkM } from "@mui/material";
 
 function appBarLabel(label) {
@@ -34,9 +33,8 @@ const darkTheme = createTheme({
 
 export default function AppBarDark() {
   const pages = [
-    { name: "Home", path: "/" },
-    { name: "Write", path: "write" },
-    { name: "Read", path: "read" },
+    { name: "Escribir", path: "/NFC_Menu" },
+    { name: "Leer", path: "leer" },
   ];
 
   return (
