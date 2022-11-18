@@ -18,7 +18,7 @@ export default function Write() {
 
   return (
     <div>
-      <Box sx={{ width: "100%", paddingY: "5%" }}>
+      <Box sx={{ maxWidth: "100%", paddingY: "5%" }}>
         <WriteButton handleWrite={handleWrite} />
       </Box>
     </div>
