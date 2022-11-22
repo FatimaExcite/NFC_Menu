@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   createTheme,
   FormControl,
@@ -9,6 +8,8 @@ import {
   ThemeProvider,
   Typography,
 } from "@mui/material";
+import { useState } from "react";
+import Alert from "../alert";
 
 const theme = createTheme({
   palette: {
@@ -28,10 +29,41 @@ const LinkMessage = ({ url, message }) => {
 };
 
 export default function ReadButton({ handleRead, messageDecoder, typeMessage }) {
-  console.log("messageDecoder", messageDecoder);
-  console.log("typeMessage", typeMessage);
+  const [snack, setSnack] = useState({
+    open: false,
+    message: "Error",
+    type: "Success",
+  });
+
   const action = async () => {
-    await handleRead();
+    await handleRead()
+      .then(() => {
+        // throw { message: "test error" };
+        setSnack({
+          open: false,
+          message: "",
+        });
+        setTimeout(() => {
+          setSnack({
+            open: false,
+            message: "",
+          });
+        }, 6000);
+      })
+      .catch((error) => {
+        setSnack({
+          open: true,
+          message: "Ocurrió un error",
+          type: "error",
+        });
+        setTimeout(() => {
+          setSnack({
+            open: false,
+            message: "",
+          });
+        }, 6000);
+        console.log(error);
+      });
   };
 
   return (
@@ -48,8 +80,12 @@ export default function ReadButton({ handleRead, messageDecoder, typeMessage }) 
             <FormControl fullWidth>
               <ThemeProvider theme={theme}>
                 <Button color="dark" variant="contained" onClick={() => action()} sx={{ m: 3 }}>
-                  Read NFC
+                  LEER NFC
                 </Button>
+                {console.log("snack", snack)}
+                {snack.open && (
+                  <Alert message={snack.message} Popen={snack.open} type={snack.type} />
+                )}
               </ThemeProvider>
             </FormControl>
             <Typography

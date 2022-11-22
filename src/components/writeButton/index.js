@@ -9,9 +9,9 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import Box from "@mui/material/Box";
-import react, { useState } from "react";
+import { useState } from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Alert from "../alert";
 
 const theme = createTheme({
   palette: {
@@ -24,9 +24,12 @@ const theme = createTheme({
 
 export default function WriteButton({ handleWrite }) {
   const [message, setMessage] = useState("");
-  console.log("message", message);
   const [type, setType] = useState("");
-  console.log("type", type);
+  const [snack, setSnack] = useState({
+    open: false,
+    message: "Error",
+    type: "Success",
+  });
 
   const handleChange = (event) => {
     setType(event.target.value);
@@ -37,7 +40,34 @@ export default function WriteButton({ handleWrite }) {
   };
 
   const action = async () => {
-    await handleWrite(type, message);
+    await handleWrite(type, message)
+      .then(() => {
+        // throw { message: "test error" };
+        setSnack({
+          open: true,
+          message: "Mensaje escrito correctamente",
+        });
+        setTimeout(() => {
+          setSnack({
+            open: false,
+            message: "",
+          });
+        }, 6000);
+      })
+      .catch((error) => {
+        setSnack({
+          open: true,
+          message: "Ocurrió un error",
+          type: "error",
+        });
+        setTimeout(() => {
+          setSnack({
+            open: false,
+            message: "",
+          });
+        }, 6000);
+        console.log(error);
+      });
   };
 
   return (
@@ -74,8 +104,11 @@ export default function WriteButton({ handleWrite }) {
               />
               <ThemeProvider theme={theme}>
                 <Button color="dark" variant="contained" onClick={() => action()} sx={{ m: 3 }}>
-                  Write NFC
+                  ESCRIBIR NFC
                 </Button>
+                {snack.open && (
+                  <Alert message={snack.message} Popen={snack.open} type={snack.type} />
+                )}
               </ThemeProvider>
             </FormControl>
           </Paper>

@@ -9,25 +9,20 @@ export default function Read() {
     const ndef = new window.NDEFReader();
     try {
       await ndef.scan();
-      console.log("Scan started successfully.");
+      console.log("Leyendo mensaje exitosamente");
       ndef.addEventListener("reading", ({ message, serialNumber }) => {
-        console.log("Serial Number:", serialNumber);
-        console.log("Message:", message);
         const messageDecoder = new TextDecoder();
         for (const record of message.records) {
           switch (record.recordType) {
             case "text":
-              console.log("Text:", messageDecoder.decode(record.data));
               setReadMessage(messageDecoder.decode(record.data).toString());
               setTypeMessage("text");
               break;
             case "url":
-              console.log("URL:", messageDecoder.decode(record.data));
               setReadMessage(messageDecoder.decode(record.data));
               setTypeMessage("url");
               break;
             default:
-              console.log("Unknown data format.");
               setReadMessage("Formato desconocido");
               setTypeMessage("unknown");
           }
